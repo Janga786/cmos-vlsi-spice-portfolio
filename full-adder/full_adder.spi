@@ -1,0 +1,85 @@
+*** SPICE deck for cell sim_Full_Adder{sch} from library ENGR-338
+*** Created on Tue Sep 30, 2025 16:52:33
+*** Last revised on Tue Sep 30, 2025 20:05:41
+*** Written on Tue Sep 30, 2025 20:05:49 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__Inverter FROM CELL Inverter{sch}
+.SUBCKT ENGR-338__Inverter in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@1 out in gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 out in vdd vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__Inverter
+
+*** SUBCIRCUIT ENGR-338__NAND_Gate FROM CELL NAND_Gate{sch}
+.SUBCKT ENGR-338__NAND_Gate A AnandB B
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 AnandB A net@12 gnd NMOS L=0.6U W=3U
+Mnmos@1 net@12 B gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A AnandB vdd PMOS L=0.6U W=3U
+Mpmos@1 vdd B AnandB vdd PMOS L=0.6U W=3U
+.ENDS ENGR-338__NAND_Gate
+
+*** SUBCIRCUIT ENGR-338__NOR_Gate FROM CELL NOR_Gate{sch}
+.SUBCKT ENGR-338__NOR_Gate A AnorB B
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 AnorB A gnd gnd NMOS L=0.6U W=3U
+Mnmos@1 AnorB B gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A net@5 vdd PMOS L=0.6U W=6U
+Mpmos@1 net@5 B AnorB vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__NOR_Gate
+
+*** SUBCIRCUIT ENGR-338__XOR_Gate FROM CELL XOR_Gate{sch}
+.SUBCKT ENGR-338__XOR_Gate A B out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 net@77 A gnd gnd NMOS L=0.6U W=3U
+Mnmos@1 net@72 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@2 out net@77 net@90 gnd NMOS L=0.6U W=3U
+Mnmos@3 out A net@89 gnd NMOS L=0.6U W=3U
+Mnmos@4 net@90 net@72 gnd gnd NMOS L=0.6U W=3U
+Mnmos@5 net@89 B gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A net@77 vdd PMOS L=0.6U W=6U
+Mpmos@1 vdd B net@72 vdd PMOS L=0.6U W=6U
+Mpmos@2 vdd B net@52 vdd PMOS L=0.6U W=6U
+Mpmos@3 vdd A net@52 vdd PMOS L=0.6U W=6U
+Mpmos@4 net@52 net@77 out vdd PMOS L=0.6U W=6U
+Mpmos@5 net@52 net@72 out vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__XOR_Gate
+
+*** SUBCIRCUIT ENGR-338__Full_Adder FROM CELL Full_Adder{sch}
+.SUBCKT ENGR-338__Full_Adder A B Cin Cout S
+** GLOBAL gnd
+** GLOBAL vdd
+XInverter@0 net@30 net@36 ENGR-338__Inverter
+XInverter@1 net@31 net@32 ENGR-338__Inverter
+XInverter@2 net@38 Cout ENGR-338__Inverter
+XNAND_Gat@0 net@11 net@31 Cin ENGR-338__NAND_Gate
+XNAND_Gat@1 A net@30 B ENGR-338__NAND_Gate
+XNOR_Gate@0 net@32 net@38 net@36 ENGR-338__NOR_Gate
+XXOR_Gate@0 A B net@11 ENGR-338__XOR_Gate
+XXOR_Gate@1 net@11 Cin S ENGR-338__XOR_Gate
+.ENDS ENGR-338__Full_Adder
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: sim_Full_Adder{sch}
+XFull_Add@0 Full_Add@0_A Full_Add@0_B vdd Full_Add@0_Cout Full_Add@0_S ENGR-338__Full_Adder
+
+* Spice Code nodes in cell cell 'sim_Full_Adder{sch}'
+VDD vdd 0 DC 5
+.global vdd gnd
+V1 A 0 PULSE(0 5 10n 1p 1p 10n 21n)
+V2 B 0 PULSE(0 5 15n 1p 1p 10n 21n)
+VC Cin 0 DC 5
+XFA A B Cin Cout S ENGR-338__Full_Adder
+CS S 0 20f
+CC Cout 0 20f
+.tran 0 80n
+.options plotwinsize=0
+.include C5_models.txt
+.END

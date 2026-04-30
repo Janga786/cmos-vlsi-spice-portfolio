@@ -1,0 +1,28 @@
+*** SPICE deck for cell sim_inverter{sch} from library ENGR-338
+*** Created on Tue Sep 16, 2025 10:59:23
+*** Last revised on Mon Sep 22, 2025 19:03:40
+*** Written on Mon Sep 22, 2025 19:03:46 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__Inverter FROM CELL Inverter{sch}
+.SUBCKT ENGR-338__Inverter in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@1 out in gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 out in vdd vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__Inverter
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: sim_inverter{sch}
+Ccap@0 gnd out 10p
+XInverter@5 in out ENGR-338__Inverter
+
+* Spice Code nodes in cell cell 'sim_inverter{sch}'
+vdd vdd 0 DC 5
+vin in 0 PULSE(0 5 10n 1n 1n 80n 160n)
+.tran 200n
+.options plotwinsize=0
+.include "C5_models.txt"
+.END

@@ -1,0 +1,20 @@
+*** SPICE deck for cell Lab4{sch} from library ENGR-338
+*** Created on Tue Sep 16, 2025 08:20:20
+*** Last revised on Tue Sep 16, 2025 08:55:04
+*** Written on Tue Sep 16, 2025 08:55:09 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: Lab4{sch}
+MNMOS gnd in out gnd N L=0.6U W=3U
+MPMOS out in vdd vdd P L=0.6U W=6U
+
+* Spice Code nodes in cell cell 'Lab4{sch}'
+vdd vdd 0 DC 5
+vin in 0 PULSE(0 5 0 1p 1p 40n 80n)
+.tran 300n
+.options plotwinsize=0
+.include C5_models.txt
+.END

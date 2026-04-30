@@ -1,0 +1,30 @@
+# SPICE simulator output (re-derivable from the .spi netlists)
+*.log
+*.raw
+*.op.raw
+*.tr0
+*.lis
+*.out
+*.ic
+*.st0
+*.fft
+
+# LTspice cruft
+*.fil
+*.cir
+*.net
+
+# Electric VLSI backups
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Project-local
+.claude/

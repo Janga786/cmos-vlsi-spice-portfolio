@@ -1,0 +1,130 @@
+*** SPICE deck for cell sim_ADC_R_2R_DAC{sch} from library ENGR-338
+*** Created on Tue May 06, 2008 16:31:21
+*** Last revised on Mon Sep 01, 2025 21:24:37
+*** Written on Tue Sep 16, 2025 09:29:16 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__Ideal_Switch FROM CELL Ideal_Switch{sch}
+.SUBCKT ENGR-338__Ideal_Switch contrlm contrlp in out
+
+* Spice Code nodes in cell cell 'Ideal_Switch{sch}'
+Sswitch  in out  contrlp contrlm  switmod
+.model switmod sw
+.ENDS ENGR-338__Ideal_Switch
+
+*** SUBCIRCUIT ENGR-338__Ideal_Differencer_2 FROM CELL Ideal_Differencer_2{sch}
+.SUBCKT ENGR-338__Ideal_Differencer_2 im ip om op
+
+* Spice Code nodes in cell cell 'Ideal_Differencer_2{sch}'
+E  op  om  ip  im  2
+.ENDS ENGR-338__Ideal_Differencer_2
+
+*** SUBCIRCUIT ENGR-338__Ideal_ADCbit FROM CELL Ideal_ADCbit{sch}
+.SUBCKT ENGR-338__Ideal_ADCbit Bitout VCM vdd Vin Vout Vtrip
+** GLOBAL gnd
+XIdeal_sw@0 VCM Vin vdd Bitout ENGR-338__Ideal_Switch
+XIdeal_sw@1 Vin VCM Bitout gnd ENGR-338__Ideal_Switch
+XIdeal_sw@4 Vtrip Bitout Vinh Vout ENGR-338__Ideal_Switch
+XIdeal_sw@5 Bitout Vtrip Vout Vinl ENGR-338__Ideal_Switch
+Xideal_co@0 VCM Vin gnd Vinh ENGR-338__Ideal_Differencer_2
+Xideal_co@1 gnd Vin gnd Vinl ENGR-338__Ideal_Differencer_2
+.ENDS ENGR-338__Ideal_ADCbit
+
+*** SUBCIRCUIT ENGR-338__Ideal_Opamp FROM CELL Ideal_Opamp{sch}
+.SUBCKT ENGR-338__Ideal_Opamp Vm Vo Vp
+** GLOBAL gnd
+Rres@0 Vp Vm 1.41G
+Rres@1 Vo gnd 1
+
+* Spice Code nodes in cell cell 'Ideal_Opamp{sch}'
+G1 Vo 0  Vp  Vm 100MEG
+.ENDS ENGR-338__Ideal_Opamp
+
+*** SUBCIRCUIT ENGR-338__Ideal_Sample_Hold FROM CELL Ideal_Sample&Hold{sch}
+.SUBCKT ENGR-338__Ideal_Sample_Hold Vclk vdd Vin Voutsh
+** GLOBAL gnd
+Ccap@0 gnd Vins 0.1n
+Ccap@1 gnd net@32 0.1f
+Rres@0 vdd Vtrip 100MEG
+Rres@1 Vtrip gnd 100MEG
+XIdeal_sw@0 Vclk Vtrip Vinb Vins ENGR-338__Ideal_Switch
+XIdeal_sw@1 Vtrip Vclk Vins net@32 ENGR-338__Ideal_Switch
+Xideal_op@0 Voutsh Voutsh net@32 ENGR-338__Ideal_Opamp
+Xideal_op@1 Vinb Vinb Vin ENGR-338__Ideal_Opamp
+.ENDS ENGR-338__Ideal_Sample_Hold
+
+*** SUBCIRCUIT ENGR-338__Ideal_10Bit_ADC FROM CELL Ideal_10Bit_ADC{sch}
+.SUBCKT ENGR-338__Ideal_10Bit_ADC B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 clock vdd Vin VREFM VREFP
+** GLOBAL gnd
+Rres@0 vdd Vtrip 100MEG
+Rres@1 Vtrip gnd 100MEG
+X_18_Ideal@0 B6 VCM vdd net@57 net@25 Vtrip ENGR-338__Ideal_ADCbit
+X_18_Ideal@1 B5 VCM vdd net@25 net@24 Vtrip ENGR-338__Ideal_ADCbit
+X_18_Ideal@6 B4 VCM vdd net@24 net@18 Vtrip ENGR-338__Ideal_ADCbit
+X_18_Ideal@8 B2 VCM vdd net@51 net@16 Vtrip ENGR-338__Ideal_ADCbit
+X_18_Ideal@9 B1 VCM vdd net@16 net@15 Vtrip ENGR-338__Ideal_ADCbit
+X_18_Ideal@10 B0 VCM vdd net@15 _18_Ideal@10_Vout Vtrip ENGR-338__Ideal_ADCbit
+XIdeal_AD@0 B7 VCM vdd net@60 net@57 Vtrip ENGR-338__Ideal_ADCbit
+XIdeal_AD@1 B3 VCM vdd net@18 net@51 Vtrip ENGR-338__Ideal_ADCbit
+XIdeal_AD@2 B9 VCM vdd PIPIN net@59 Vtrip ENGR-338__Ideal_ADCbit
+XIdeal_AD@3 B8 VCM vdd net@59 net@60 Vtrip ENGR-338__Ideal_ADCbit
+Xideal_sa@0 clock vdd Vin VOUTSH ENGR-338__Ideal_Sample_Hold
+
+* Spice Code nodes in cell cell 'Ideal_10Bit_ADC{sch}'
+B1 VCM 0 V=(V(VREFP)-V(VREFM))/2
+BPIP PIPIN 0 V=V(VOUTSH)-V(VREFM)+((V(VREFP)-V(VREFM))/2048)
+.ENDS ENGR-338__Ideal_10Bit_ADC
+
+*** SUBCIRCUIT ENGR-338__R_2R_Ladder FROM CELL R_2R_Ladder{sch}
+.SUBCKT ENGR-338__R_2R_Ladder B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 Vout
+** GLOBAL gnd
+Rresnwell@3 net@11 net@7 10k
+Rresnwell@4 net@7 B8 10k
+Rresnwell@5 net@11 net@85 10k
+Rresnwell@7 net@84 B7 10k
+Rresnwell@8 net@85 net@27 10k
+Rresnwell@12 net@28 B6 10k
+Rresnwell@13 net@25 net@23 10k
+Rresnwell@14 net@23 B5 10k
+Rresnwell@15 net@25 net@29 10k
+Rresnwell@16 net@75 B4 10k
+Rresnwell@18 net@29 net@75 10k
+Rresnwell@19 net@27 net@28 10k
+Rresnwell@20 net@27 net@25 10k
+Rresnwell@21 net@37 B3 10k
+Rresnwell@22 net@34 net@32 10k
+Rresnwell@23 net@32 B2 10k
+Rresnwell@24 net@34 net@38 10k
+Rresnwell@25 net@77 B1 10k
+Rresnwell@26 net@38 net@42 10k
+Rresnwell@27 net@38 net@77 10k
+Rresnwell@28 net@36 net@37 10k
+Rresnwell@29 net@36 net@34 10k
+Rresnwell@30 net@76 B0 10k
+Rresnwell@31 net@42 net@76 10k
+Rresnwell@32 net@42 net@66 10k
+Rresnwell@34 net@66 gnd 10k
+Rresnwell@35 net@29 net@36 10k
+Rresnwell@36 net@70 B9 10k
+Rresnwell@37 Vout net@70 10k
+Rresnwell@38 Vout net@11 10k
+Rresnwell@39 net@85 net@84 10k
+.ENDS ENGR-338__R_2R_Ladder
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: sim_ADC_R_2R_DAC{sch}
+XIdeal_10@1 net@660 net@658 net@656 net@653 net@651 net@649 net@647 net@645 net@643 net@622 clock vdd Vin GND VDD ENGR-338__Ideal_10Bit_ADC
+XR_2R_Lad@0 R_2R_Lad@0_B0 R_2R_Lad@0_B1 R_2R_Lad@0_B2 net@653 net@651 net@649 net@647 net@645 net@643 net@622 Vout ENGR-338__R_2R_Ladder
+
+* Spice Code nodes in cell cell 'sim_ADC_R_2R_DAC{sch}'
+VDD VDD 0 DC 5
+Vtrip Vtrip 0 DC 2.5
+VGND GND 0 DC 0
+Vin Vin 0 DC 0 SINE(2.5 2.5 2MEG)
+Vclock clock 0 DC 0 PULSE(0 5 5n 100p 100p 4.9n 10n)
+*.options post
+.options plotwinsize=0
+.tran 10p 1000n 10p .1n uic
+.END

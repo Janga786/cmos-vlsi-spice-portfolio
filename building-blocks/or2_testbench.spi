@@ -1,0 +1,31 @@
+*** SPICE deck for cell OR_Gate_Sim{sch} from library ENGR-338
+*** Created on Sun Oct 05, 2025 15:19:15
+*** Last revised on Sun Oct 05, 2025 15:22:34
+*** Written on Sun Oct 05, 2025 15:23:02 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__OR_Gate FROM CELL OR_Gate{sch}
+.SUBCKT ENGR-338__OR_Gate A AorB B
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 net@5 A gnd gnd NMOS L=0.6U W=3U
+Mnmos@1 net@5 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@2 AorB net@5 gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A net@18 vdd PMOS L=0.6U W=6U
+Mpmos@1 net@18 B net@5 vdd PMOS L=0.6U W=6U
+Mpmos@2 vdd net@5 AorB vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__OR_Gate
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: OR_Gate_Sim{sch}
+XOR_Gate@0 A AorB B ENGR-338__OR_Gate
+
+* Spice Code nodes in cell cell 'OR_Gate_Sim{sch}'
+vdd vdd 0 dc 5
+vA A 0 PULSE(0 5 5n 10p 10p 10n 21n)
+vB B 0 PULSE(0 5 10n 10p 10p 10n 21n)
+.tran 0 40n
+.include C5_models.txt
+.END

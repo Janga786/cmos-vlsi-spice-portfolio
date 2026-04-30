@@ -1,0 +1,65 @@
+*** SPICE deck for cell 8Bit_HighSpeed_FA_Sim{sch} from library ENGR-338
+*** Created on Thu Oct 09, 2025 09:39:15
+*** Last revised on Tue Oct 14, 2025 20:14:22
+*** Written on Tue Oct 14, 2025 20:14:29 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__High_Speed_FA FROM CELL High_Speed_FA{sch}
+.SUBCKT ENGR-338__High_Speed_FA A B Cin Co S
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 Coi A net@27 gnd NMOS L=0.6U W=3U
+Mnmos@1 net@27 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@2 Coi Cin net@28 gnd NMOS L=0.6U W=3U
+Mnmos@3 net@28 A gnd gnd NMOS L=0.6U W=3U
+Mnmos@4 net@28 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@5 Co Coi gnd gnd NMOS L=0.6U W=3U
+Mnmos@6 net@89 A net@152 gnd NMOS L=0.6U W=3U
+Mnmos@7 net@152 B net@151 gnd NMOS L=0.6U W=3U
+Mnmos@8 net@151 Cin gnd gnd NMOS L=0.6U W=3U
+Mnmos@9 net@89 Coi net@96 gnd NMOS L=0.6U W=3U
+Mnmos@10 net@96 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@11 net@96 A gnd gnd NMOS L=0.6U W=3U
+Mnmos@12 net@96 Cin gnd gnd NMOS L=0.6U W=3U
+Mnmos@13 S net@89 gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A net@0 vdd PMOS L=0.6U W=3U
+Mpmos@1 vdd B net@0 vdd PMOS L=0.6U W=3U
+Mpmos@2 net@0 B net@11 vdd PMOS L=0.6U W=3U
+Mpmos@3 net@11 A Coi vdd PMOS L=0.6U W=3U
+Mpmos@4 net@0 Cin Coi vdd PMOS L=0.6U W=3U
+Mpmos@5 vdd Coi Co vdd PMOS L=0.6U W=3U
+Mpmos@6 vdd A net@79 vdd PMOS L=0.6U W=3U
+Mpmos@7 vdd B net@79 vdd PMOS L=0.6U W=3U
+Mpmos@8 vdd Cin net@79 vdd PMOS L=0.6U W=3U
+Mpmos@9 net@79 A net@86 vdd PMOS L=0.6U W=3U
+Mpmos@10 net@86 B net@87 vdd PMOS L=0.6U W=3U
+Mpmos@11 net@87 Cin net@89 vdd PMOS L=0.6U W=3U
+Mpmos@12 net@79 Coi net@89 vdd PMOS L=0.6U W=3U
+Mpmos@13 vdd net@89 S vdd PMOS L=0.6U W=3U
+.ENDS ENGR-338__High_Speed_FA
+
+*** SUBCIRCUIT ENGR-338__8bit_High_Speed_FA FROM CELL 8bit_High_Speed_FA{sch}
+.SUBCKT ENGR-338__8bit_High_Speed_FA A[0] A[1] A[2] A[3] A[4] A[5] A[6] A[7] B[0] B[1] B[2] B[3] B[4] B[5] B[6] B[7] Cin Co[0] Co[1] Co[2] Co[3] Co[4] Co[5] Co[6] Co[7] S[0] S[1] S[2] S[3] S[4] S[5] S[6] S[7]
+** GLOBAL gnd
+** GLOBAL vdd
+XFA_HighS[0] A[0] B[0] Cin Co[0] S[0] ENGR-338__High_Speed_FA
+XFA_HighS[1] A[1] B[1] Co[0] Co[1] S[1] ENGR-338__High_Speed_FA
+XFA_HighS[2] A[2] B[2] Co[1] Co[2] S[2] ENGR-338__High_Speed_FA
+XFA_HighS[3] A[3] B[3] Co[2] Co[3] S[3] ENGR-338__High_Speed_FA
+XFA_HighS[4] A[4] B[4] Co[3] Co[4] S[4] ENGR-338__High_Speed_FA
+XFA_HighS[5] A[5] B[5] Co[4] Co[5] S[5] ENGR-338__High_Speed_FA
+XFA_HighS[6] A[6] B[6] Co[5] Co[6] S[6] ENGR-338__High_Speed_FA
+XFA_HighS[7] A[7] B[7] Co[6] Co[7] S[7] ENGR-338__High_Speed_FA
+.ENDS ENGR-338__8bit_High_Speed_FA
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: 8Bit_HighSpeed_FA_Sim{sch}
+X_8bit_Hig@0 gnd vdd vdd vdd vdd vdd vdd vdd gnd gnd gnd gnd gnd gnd gnd gnd vdd Co[0] Co[1] Co[2] Co[3] Co[4] Co[5] Co[6] Co[7] S[0] S[1] S[2] S[3] S[4] S[5] S[6] S[7] ENGR-338__8bit_High_Speed_FA
+
+* Spice Code nodes in cell cell '8Bit_HighSpeed_FA_Sim{sch}'
+vdd vdd 0 DC 5
+.tran 0 30n
+.include C5_models.txt
+.END

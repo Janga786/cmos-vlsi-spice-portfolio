@@ -1,0 +1,54 @@
+*** SPICE deck for cell sim_HSFA{sch} from library ENGR-338
+*** Created on Tue Oct 07, 2025 09:53:18
+*** Last revised on Tue Oct 07, 2025 09:57:34
+*** Written on Tue Oct 07, 2025 10:00:37 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__High_Speed_FA FROM CELL High_Speed_FA{sch}
+.SUBCKT ENGR-338__High_Speed_FA A B Cin Co S
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 Coi A net@27 gnd NMOS L=0.6U W=3U
+Mnmos@1 net@27 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@2 Coi Cin net@28 gnd NMOS L=0.6U W=3U
+Mnmos@3 net@28 A gnd gnd NMOS L=0.6U W=3U
+Mnmos@4 net@28 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@5 Co Coi gnd gnd NMOS L=0.6U W=3U
+Mnmos@6 net@89 A net@152 gnd NMOS L=0.6U W=3U
+Mnmos@7 net@152 B net@151 gnd NMOS L=0.6U W=3U
+Mnmos@8 net@151 Cin gnd gnd NMOS L=0.6U W=3U
+Mnmos@9 net@89 Coi net@96 gnd NMOS L=0.6U W=3U
+Mnmos@10 net@96 B gnd gnd NMOS L=0.6U W=3U
+Mnmos@11 net@96 A gnd gnd NMOS L=0.6U W=3U
+Mnmos@12 net@96 Cin gnd gnd NMOS L=0.6U W=3U
+Mnmos@13 S net@89 gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A net@0 vdd PMOS L=0.6U W=3U
+Mpmos@1 vdd B net@0 vdd PMOS L=0.6U W=3U
+Mpmos@2 net@0 B net@11 vdd PMOS L=0.6U W=3U
+Mpmos@3 net@11 A Coi vdd PMOS L=0.6U W=3U
+Mpmos@4 net@0 Cin Coi vdd PMOS L=0.6U W=3U
+Mpmos@5 vdd Coi Co vdd PMOS L=0.6U W=3U
+Mpmos@6 vdd A net@79 vdd PMOS L=0.6U W=3U
+Mpmos@7 vdd B net@79 vdd PMOS L=0.6U W=3U
+Mpmos@8 vdd Cin net@79 vdd PMOS L=0.6U W=3U
+Mpmos@9 net@79 A net@86 vdd PMOS L=0.6U W=3U
+Mpmos@10 net@86 B net@87 vdd PMOS L=0.6U W=3U
+Mpmos@11 net@87 Cin net@89 vdd PMOS L=0.6U W=3U
+Mpmos@12 net@79 Coi net@89 vdd PMOS L=0.6U W=3U
+Mpmos@13 vdd net@89 S vdd PMOS L=0.6U W=3U
+.ENDS ENGR-338__High_Speed_FA
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: sim_HSFA{sch}
+XHigh_Spe@0 A B vdd Co S ENGR-338__High_Speed_FA
+
+* Spice Code nodes in cell cell 'sim_HSFA{sch}'
+vdd vdd 0 dc 5
+V1 A 0 PULSE(0 5 10n 1p 1p 10n 21n)
+V2 B 0 PULSE(0 5 15n 1p 1p 10n 21n)
+.tran 0 80n 
+.options plotwinsize=0
+.include C5_models.txt
+.END

@@ -1,0 +1,29 @@
+*** SPICE deck for cell sim_NOR{sch} from library ENGR-338
+*** Created on Tue Sep 30, 2025 16:19:05
+*** Last revised on Tue Sep 30, 2025 16:25:20
+*** Written on Tue Sep 30, 2025 16:28:08 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__NOR_Gate FROM CELL NOR_Gate{sch}
+.SUBCKT ENGR-338__NOR_Gate A AnorB B
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 AnorB A gnd gnd NMOS L=0.6U W=3U
+Mnmos@1 AnorB B gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A net@5 vdd PMOS L=0.6U W=6U
+Mpmos@1 net@5 B AnorB vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__NOR_Gate
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: sim_NOR{sch}
+Ccap@0 gnd out 0.1p
+XNOR_Gate@0 gnd out in ENGR-338__NOR_Gate
+
+* Spice Code nodes in cell cell 'sim_NOR{sch}'
+vdd vdd 0 dc 5
+Vin in 0 PULSE(0 5 10n 10p 10p 10n 21n)
+.tran 0 40n
+.include C5_models.txt
+.END

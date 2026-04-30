@@ -1,0 +1,54 @@
+*** SPICE deck for cell sim_ADC_R_2R_DAC_DecayTest{sch} from library ENGR-338
+*** Created on Tue May 06, 2008 16:31:21
+*** Last revised on Mon Sep 01, 2025 21:30:16
+*** Written on Tue Sep 16, 2025 09:29:06 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__R_2R_Ladder FROM CELL R_2R_Ladder{sch}
+.SUBCKT ENGR-338__R_2R_Ladder B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 Vout
+** GLOBAL gnd
+Rresnwell@3 net@11 net@7 10k
+Rresnwell@4 net@7 B8 10k
+Rresnwell@5 net@11 net@85 10k
+Rresnwell@7 net@84 B7 10k
+Rresnwell@8 net@85 net@27 10k
+Rresnwell@12 net@28 B6 10k
+Rresnwell@13 net@25 net@23 10k
+Rresnwell@14 net@23 B5 10k
+Rresnwell@15 net@25 net@29 10k
+Rresnwell@16 net@75 B4 10k
+Rresnwell@18 net@29 net@75 10k
+Rresnwell@19 net@27 net@28 10k
+Rresnwell@20 net@27 net@25 10k
+Rresnwell@21 net@37 B3 10k
+Rresnwell@22 net@34 net@32 10k
+Rresnwell@23 net@32 B2 10k
+Rresnwell@24 net@34 net@38 10k
+Rresnwell@25 net@77 B1 10k
+Rresnwell@26 net@38 net@42 10k
+Rresnwell@27 net@38 net@77 10k
+Rresnwell@28 net@36 net@37 10k
+Rresnwell@29 net@36 net@34 10k
+Rresnwell@30 net@76 B0 10k
+Rresnwell@31 net@42 net@76 10k
+Rresnwell@32 net@42 net@66 10k
+Rresnwell@34 net@66 gnd 10k
+Rresnwell@35 net@29 net@36 10k
+Rresnwell@36 net@70 B9 10k
+Rresnwell@37 Vout net@70 10k
+Rresnwell@38 Vout net@11 10k
+Rresnwell@39 net@85 net@84 10k
+.ENDS ENGR-338__R_2R_Ladder
+
+.global gnd
+
+*** TOP LEVEL CELL: sim_ADC_R_2R_DAC_DecayTest{sch}
+Ccap@0 gnd Vout 10p
+XR_2R_Lad@0 gnd gnd gnd gnd gnd gnd gnd gnd gnd B9 Vout ENGR-338__R_2R_Ladder
+
+* Spice Code nodes in cell cell 'sim_ADC_R_2R_DAC_DecayTest{sch}'
+vB9 B9 0 PULSE(0 5 1u 10p 10p 2u 5u)
+.tran 0 10u
+.options plotwinsize=0
+.END

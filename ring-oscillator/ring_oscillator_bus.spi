@@ -1,0 +1,35 @@
+*** SPICE deck for cell Ring_Oscillator_Bus{sch} from library ENGR-338
+*** Created on Tue Sep 30, 2025 08:41:52
+*** Last revised on Tue Sep 30, 2025 08:49:08
+*** Written on Sun Oct 05, 2025 13:59:02 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__Inverter_short FROM CELL Inverter_short{sch}
+.SUBCKT ENGR-338__Inverter_short in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@1 out in gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 out in vdd vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__Inverter_short
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: Ring_Oscillator_Bus{sch}
+Xinverter[0] osc_out out[0] ENGR-338__Inverter_short
+Xinverter[1] out[0] out[1] ENGR-338__Inverter_short
+Xinverter[2] out[1] out[2] ENGR-338__Inverter_short
+Xinverter[3] out[2] out[3] ENGR-338__Inverter_short
+Xinverter[4] out[3] out[4] ENGR-338__Inverter_short
+Xinverter[5] out[4] out[5] ENGR-338__Inverter_short
+Xinverter[6] out[5] out[6] ENGR-338__Inverter_short
+Xinverter[7] out[6] out[7] ENGR-338__Inverter_short
+Xinverter[8] out[7] out[8] ENGR-338__Inverter_short
+Xinverter[9] out[8] out[9] ENGR-338__Inverter_short
+Xinverter[10] out[9] osc_out ENGR-338__Inverter_short
+
+* Spice Code nodes in cell cell 'Ring_Oscillator_Bus{sch}'
+vdd vdd 0 dc 5
+.tran 0 30n
+.include C5_models.txt
+.END

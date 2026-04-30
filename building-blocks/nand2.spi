@@ -1,0 +1,29 @@
+*** SPICE deck for cell sim_NAND{sch} from library ENGR-338
+*** Created on Mon Sep 29, 2025 19:11:34
+*** Last revised on Tue Sep 30, 2025 15:53:26
+*** Written on Tue Sep 30, 2025 16:24:48 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__NAND_Gate FROM CELL NAND_Gate{sch}
+.SUBCKT ENGR-338__NAND_Gate A AnandB B
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 AnandB A net@12 gnd NMOS L=0.6U W=3U
+Mnmos@1 net@12 B gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 vdd A AnandB vdd PMOS L=0.6U W=3U
+Mpmos@1 vdd B AnandB vdd PMOS L=0.6U W=3U
+.ENDS ENGR-338__NAND_Gate
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: sim_NAND{sch}
+Ccap@0 gnd out 0.1p
+XNAND_Gat@0 vdd out in ENGR-338__NAND_Gate
+
+* Spice Code nodes in cell cell 'sim_NAND{sch}'
+vdd vdd 0 dc 5
+Vin in 0 PULSE(0 5 10n 10p 10p 10n 21n)
+.tran 0 40n
+.include C5_models.txt
+.END

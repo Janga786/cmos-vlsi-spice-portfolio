@@ -1,0 +1,23 @@
+*** SPICE deck for cell XOR_Gate{sch} from library ENGR-338
+*** Created on Tue Sep 23, 2025 09:17:26
+*** Last revised on Tue Sep 23, 2025 09:48:41
+*** Written on Tue Sep 23, 2025 09:48:54 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: XOR_Gate{sch}
+Mnmos@0 net@77 A gnd gnd NMOS L=0.6U W=3U
+Mnmos@1 net@72 B gnd gnd N L=0.6U W=3U
+Mnmos@2 out net@77 net@90 gnd N L=0.6U W=3U
+Mnmos@3 out A net@89 gnd N L=0.6U W=3U
+Mnmos@4 net@90 net@72 gnd gnd N L=0.6U W=3U
+Mnmos@5 net@89 B gnd gnd N L=0.6U W=3U
+Mpmos@0 vdd A net@77 vdd PMOS L=0.6U W=6U
+Mpmos@1 vdd B net@72 vdd P L=0.6U W=6U
+Mpmos@2 vdd B net@52 vdd PMOS L=0.6U W=6U
+Mpmos@3 vdd A net@52 vdd PMOS L=0.6U W=6U
+Mpmos@4 net@52 net@77 out vdd P L=0.6U W=6U
+Mpmos@5 net@52 net@72 out vdd P L=0.6U W=6U
+.END

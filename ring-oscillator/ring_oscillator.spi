@@ -1,0 +1,55 @@
+*** SPICE deck for cell Ring_Oscillator{sch} from library ENGR-338
+*** Created on Tue Sep 30, 2025 08:25:26
+*** Last revised on Tue Sep 30, 2025 08:29:39
+*** Written on Sun Oct 05, 2025 13:35:46 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__Inverter_short FROM CELL Inverter_short{sch}
+.SUBCKT ENGR-338__Inverter_short in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@1 out in gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 out in vdd vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__Inverter_short
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: Ring_Oscillator{sch}
+XInverter@0 osc_out net@13 ENGR-338__Inverter_short
+XInverter@1 net@13 net@14 ENGR-338__Inverter_short
+XInverter@2 net@14 net@0 ENGR-338__Inverter_short
+XInverter@3 Inverter@3_in Inverter@3_out ENGR-338__Inverter_short
+XInverter@4 Inverter@4_in Inverter@4_out ENGR-338__Inverter_short
+XInverter@5 net@2 net@3 ENGR-338__Inverter_short
+XInverter@6 Inverter@6_in Inverter@6_out ENGR-338__Inverter_short
+XInverter@7 Inverter@7_in Inverter@7_out ENGR-338__Inverter_short
+XInverter@8 net@5 net@6 ENGR-338__Inverter_short
+XInverter@9 net@6 net@7 ENGR-338__Inverter_short
+XInverter@10 Inverter@10_in Inverter@10_out ENGR-338__Inverter_short
+XInverter@11 Inverter@11_in Inverter@11_out ENGR-338__Inverter_short
+XInverter@12 Inverter@12_in Inverter@12_out ENGR-338__Inverter_short
+XInverter@13 net@0 net@1 ENGR-338__Inverter_short
+XInverter@14 Inverter@14_in Inverter@14_out ENGR-338__Inverter_short
+XInverter@15 Inverter@15_in Inverter@15_out ENGR-338__Inverter_short
+XInverter@16 net@3 net@4 ENGR-338__Inverter_short
+XInverter@17 net@4 net@5 ENGR-338__Inverter_short
+XInverter@18 Inverter@18_in Inverter@18_out ENGR-338__Inverter_short
+XInverter@19 Inverter@19_in Inverter@19_out ENGR-338__Inverter_short
+XInverter@20 net@7 osc_out ENGR-338__Inverter_short
+XInverter@21 Inverter@21_in Inverter@21_out ENGR-338__Inverter_short
+XInverter@22 Inverter@22_in Inverter@22_out ENGR-338__Inverter_short
+XInverter@23 Inverter@23_in Inverter@23_out ENGR-338__Inverter_short
+XInverter@24 net@1 net@2 ENGR-338__Inverter_short
+XInverter@25 Inverter@25_in Inverter@25_out ENGR-338__Inverter_short
+XInverter@26 Inverter@26_in Inverter@26_out ENGR-338__Inverter_short
+XInverter@27 Inverter@27_in Inverter@27_out ENGR-338__Inverter_short
+XInverter@28 Inverter@28_in Inverter@28_out ENGR-338__Inverter_short
+XInverter@29 Inverter@29_in Inverter@29_out ENGR-338__Inverter_short
+XInverter@30 Inverter@30_in Inverter@30_out ENGR-338__Inverter_short
+
+* Spice Code nodes in cell cell 'Ring_Oscillator{sch}'
+vdd vdd 0 dc 5
+.tran 0 30n
+.include C5_models.txt
+.END

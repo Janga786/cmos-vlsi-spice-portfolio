@@ -1,0 +1,54 @@
+*** SPICE deck for cell sim_8bit_MUX{sch} from library ENGR-338
+*** Created on Tue Oct 07, 2025 08:38:41
+*** Last revised on Tue Oct 07, 2025 08:40:34
+*** Written on Tue Oct 07, 2025 08:40:49 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT ENGR-338__MUX FROM CELL MUX{sch}
+.SUBCKT ENGR-338__MUX A B S Si Y
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 A Si Y gnd NMOS L=0.6U W=3U
+Mnmos@1 B S Y gnd NMOS L=0.6U W=3U
+Mpmos@0 Y S A vdd PMOS L=0.6U W=3U
+Mpmos@1 Y Si B vdd PMOS L=0.6U W=3U
+.ENDS ENGR-338__MUX
+
+*** SUBCIRCUIT ENGR-338__8bit_MUX FROM CELL 8bit_MUX{sch}
+.SUBCKT ENGR-338__8bit_MUX A[0] A[1] A[2] A[3] A[4] A[5] A[6] A[7] B[0] B[1] B[2] B[3] B[4] B[5] B[6] B[7] S Si Y[0] Y[1] Y[2] Y[3] Y[4] Y[5] Y[6] Y[7]
+** GLOBAL gnd
+** GLOBAL vdd
+XMUX[0] A[0] B[0] S Si Y[0] ENGR-338__MUX
+XMUX[1] A[1] B[1] S Si Y[1] ENGR-338__MUX
+XMUX[2] A[2] B[2] S Si Y[2] ENGR-338__MUX
+XMUX[3] A[3] B[3] S Si Y[3] ENGR-338__MUX
+XMUX[4] A[4] B[4] S Si Y[4] ENGR-338__MUX
+XMUX[5] A[5] B[5] S Si Y[5] ENGR-338__MUX
+XMUX[6] A[6] B[6] S Si Y[6] ENGR-338__MUX
+XMUX[7] A[7] B[7] S Si Y[7] ENGR-338__MUX
+.ENDS ENGR-338__8bit_MUX
+
+*** SUBCIRCUIT ENGR-338__Inverter_short FROM CELL Inverter_short{sch}
+.SUBCKT ENGR-338__Inverter_short in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@1 out in gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 out in vdd vdd PMOS L=0.6U W=6U
+.ENDS ENGR-338__Inverter_short
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: sim_8bit_MUX{sch}
+X_8bit_MUX@0 A A A A A A A A B B B B B B B B S net@7 Y[0] Y[1] Y[2] Y[3] Y[4] Y[5] Y[6] Y[7] ENGR-338__8bit_MUX
+XInverter@0 S net@7 ENGR-338__Inverter_short
+
+* Spice Code nodes in cell cell 'sim_8bit_MUX{sch}'
+vdd vdd 0 dc 5
+V1 A 0 PULSE(0 5 10n 1p 1p 5n 11n)
+V2 B 0 PULSE(0 5 10n 1p 1p 10n 21n)
+V3 S 0 PULSE(0 5 10n 1p 1p 40n 81n)
+.tran 0 80n 
+.options plotwinsize=0
+.include C5_models.txt
+.END

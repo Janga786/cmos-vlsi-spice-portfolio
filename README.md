@@ -1,6 +1,6 @@
 # CMOS VLSI SPICE Netlists
 
-Schematic-level CMOS designs from my Digital VLSI course at Fort Lewis
+Schematic-level CMOS designs from my ENGR 338 course at Fort Lewis
 College (fall 2025; the Electric library is named `ENGR-338`). I drew the
 schematics in Electric VLSI 9.08 and exported these SPICE decks. They use
 BSIM3 models for the AMI C5 process (5 V, 0.6 µm drawn channel length,
